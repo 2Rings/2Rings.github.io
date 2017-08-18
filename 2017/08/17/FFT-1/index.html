@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://github.com/2Rings/2017/08/17/FFT-1/index.html">
 <meta property="og:site_name" content="DENHAR">
 <meta property="og:description" content="快速傅里叶变换解大数乘法（一）  愚公移山">
-<meta property="og:updated_time" content="2017-08-18T02:42:08.952Z">
+<meta property="og:updated_time" content="2017-08-18T02:44:58.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFT(1)">
 <meta name="twitter:description" content="快速傅里叶变换解大数乘法（一）  愚公移山">
@@ -170,7 +170,7 @@
         <p><strong>快速傅里叶变换解大数乘法（一）</strong></p>
 <hr>
 <p>愚公移山<br><a id="more"></a><br><strong>===================</strong><br><strong>多项式的表达</strong><br>\(x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}\)</p>
-<p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script><br>我们以$x$为变量，用$A(x)$表示最高次为$n-1$的多项式：<br>              $$A(x)=\sum_{j=0}^{n-1} a_jx^j $$<br>               其中$a_0，a_1, …,a_n-1$为多项式的系数，我们这里讨论所有系数属于实数域$R$。</p>
+<p><script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script><br>我们以\(x\)为变量，用$A(x)$表示最高次为$n-1$的多项式：<br>              $$A(x)=\sum_{j=0}^{n-1} a_jx^j $$<br>               其中$a_0，a_1, …,a_n-1$为多项式的系数，我们这里讨论所有系数属于实数域$R$。</p>
 <p><strong>系数表达：</strong>上式中, 系数组成的向量$a=(a_0，a_1, …,a_n-1)$就是多项式$A(x)$的系数表达。</p>
 <p>我们用$y_0$来表示，$x=x_0$时，多项式$A(x)$的值，即$y_0=A(x_0)$，用点对表示即为$(x_0,y_0)$<br>同样的，我们可以用$y_i$来表示，$x=x_i$时，多项式$A(x)$的值，即$y_k=A(x_k)$，点对$(x_k,y_k)$。<br>由此，当$x$取$n$个不同的值时，我们可以获得$n$个点对$:$$(x_0,y_0),(x_1,y<em>1),…,(x</em>{n-1},y_{n-1})$</p>
 <p><strong>点值表达：</strong>对于多项式$A(x)$, 我们可以用上述$n$个点值对来表示$n-1$次多项式$A(x)$。</p>
