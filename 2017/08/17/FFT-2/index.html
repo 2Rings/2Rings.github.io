@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/2Rings">
-  <title>Archives: 2017 | DENHAR</title>
+  <title>FFT(2) | DENHAR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="An fan of James Harden">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DENHAR">
-<meta property="og:url" content="https://github.com/2Rings/archives/2017/index.html">
+  <meta name="description" content="##快速傅里叶变换解大数乘法（二）##  愚公移山 =================== 大整数的表示上一节讲到了两个重点：系数表达和点值表达。这一节，我们就用它们来表示大整数。 $A$,$B$表示两个大整数,$C=A*B$。 如果用$k$进制来表示$A:$ $$A=(a{n-1}a{n-2}…a_2a1){k}= \sum_{j=0}^{n-1} a_jk^j$$其中，$a_0，a_1, …,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFT(2)">
+<meta property="og:url" content="https://github.com/2Rings/2017/08/17/FFT-2/index.html">
 <meta property="og:site_name" content="DENHAR">
-<meta property="og:description" content="An fan of James Harden">
+<meta property="og:description" content="##快速傅里叶变换解大数乘法（二）##  愚公移山 =================== 大整数的表示上一节讲到了两个重点：系数表达和点值表达。这一节，我们就用它们来表示大整数。 $A$,$B$表示两个大整数,$C=A*B$。 如果用$k$进制来表示$A:$ $$A=(a{n-1}a{n-2}…a_2a1){k}= \sum_{j=0}^{n-1} a_jk^j$$其中，$a_0，a_1, …,">
+<meta property="og:updated_time" content="2017-08-18T03:27:16.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="DENHAR">
-<meta name="twitter:description" content="An fan of James Harden">
+<meta name="twitter:title" content="FFT(2)">
+<meta name="twitter:description" content="##快速傅里叶变换解大数乘法（二）##  愚公移山 =================== 大整数的表示上一节讲到了两个重点：系数表达和点值表达。这一节，我们就用它们来表示大整数。 $A$,$B$表示两个大整数,$C=A*B$。 如果用$k$进制来表示$A:$ $$A=(a{n-1}a{n-2}…a_2a1){k}= \sum_{j=0}^{n-1} a_jk^j$$其中，$a_0，a_1, …,">
   
   
     <link rel="icon" href="/favicon.png">
@@ -146,223 +147,180 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-FFT-2" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      FFT(2)
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/17/FFT-2/" class="archive-article-date">
+
+        
+        <a href="/2017/08/17/FFT-2/" class="archive-article-date">
   	<time datetime="2017-08-18T03:26:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-17</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/17/FFT-2/">FFT(2)</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##快速傅里叶变换解大数乘法（二）##</p>
+<hr>
+<p>愚公移山</p>
+<p><strong>===================</strong></p>
+<p><strong>大整数的表示</strong><br>上一节讲到了两个重点：系数表达和点值表达。这一节，我们就用它们来表示大整数。</p>
+<p>$A$,$B$表示两个大整数,$C=A*B$。</p>
+<p>如果用$k$进制来表示$A:$</p>
+<p>$$A=(a<em>{n-1}a</em>{n-2}…a_2a<em>1)</em>{k}= \sum_{j=0}^{n-1} a_jk^j$$<br>其中，$a_0，a_1, …,a<em>n-1$为$A$的第$0,1,…,n-1$位数。<br>一般地，用关于$x$的幂级数来表示$A$<br>$A=(a</em>{n-1}a_{n-2}…a_2a<em>1)</em>{x}= \sum_{j=0}^{n-1} a_jx^j$</p>
+<p>不难理解，上式可以看成是关于$x$的函数，唯一确定了一个$n-1$次多项式，<br>$$A(x)=a_0+a_1x+a<em>2x^2…a</em>{n-1}x^{n-1}$$</p>
+<p>回忆上一节，当我们知道多项式的$n$对点值$(x_k,y_k)$，可以求得其系数表达向量$(a_0，a_1, …,a_n-1)$。此处,等价的可以唯一确定大整数$A$。</p>
+<p>在系数表达法下，$A$和$B$的乘积类似于竖式计算，时间复杂度为$O(n^2)$。但是，在点值表达法下，$C$的点值对中的$C(x_k)$等于$A$和$B$对应点值对的$A(x_k)$,$B(x_k)$的乘积，即$C$的点值对表示为，<br>$$(x_0,A(x_0)<em>B(x_0)),(x_1,A(x_1)</em>B(x<em>1)),…,(x</em>{n-1},A(x<em>{n-1})*B(x</em>{n-1}))$$<br>时间复杂度为$O(n)$。这么一来，如果要计算大数乘法，使用点值表达法是最好不过了。然而，上一节我们知道从系数表达转换点值表达的时间复杂度一般为$O(n^2)$，总体来说效率不升反降。<br>问题：是否有方法降低转换所需的时间复杂度呢？<br>当然，答案是肯定的。</p>
+<p>接下来，我们就要考虑利用快速傅里叶变换（FFT）和逆变换在系数表达和点值表达间切换。</p>
+<blockquote>
+<p>Written with <a href="https://stackedit.io/" target="_blank" rel="external">StackEdit</a>.</p>
+</blockquote>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thanks for your candy!<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.png">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/weixin.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/2Rings/2017/08/17/FFT-2/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/17/FFT-1/" class="archive-article-date">
-  	<time datetime="2017-08-17T23:38:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/17/FFT-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FFT(1)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/17/FFT-1/">FFT(1)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/16/hello/" class="archive-article-date">
-  	<time datetime="2017-08-17T03:07:46.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/16/hello/">hello!</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">markdownExample</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Exp/" class="article-tag-list-link color4">Exp</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/16/Welcome/" class="archive-article-date">
-  	<time datetime="2017-08-16T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/16/Welcome/">Welcome!</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">WelcomePage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/NewFriends/" class="article-tag-list-link color1">NewFriends</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/15/hello-world/" class="archive-article-date">
-  	<time datetime="2017-08-15T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/15/hello-world/">Hello!</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">WelcomePage</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/NewFriends/" class="article-tag-list-link color1">NewFriends</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+
 
 
           </div>
@@ -385,8 +343,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

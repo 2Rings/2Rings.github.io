@@ -148,6 +148,83 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-FFT-2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/17/FFT-2/">FFT(2)</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/17/FFT-2/" class="archive-article-date">
+  	<time datetime="2017-08-18T03:26:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##快速傅里叶变换解大数乘法（二）##</p>
+<hr>
+<p>愚公移山</p>
+<p><strong>===================</strong></p>
+<p><strong>大整数的表示</strong><br>上一节讲到了两个重点：系数表达和点值表达。这一节，我们就用它们来表示大整数。</p>
+<p>$A$,$B$表示两个大整数,$C=A*B$。</p>
+<p>如果用$k$进制来表示$A:$</p>
+<p>$$A=(a<em>{n-1}a</em>{n-2}…a_2a<em>1)</em>{k}= \sum_{j=0}^{n-1} a_jk^j$$<br>其中，$a_0，a_1, …,a<em>n-1$为$A$的第$0,1,…,n-1$位数。<br>一般地，用关于$x$的幂级数来表示$A$<br>$A=(a</em>{n-1}a_{n-2}…a_2a<em>1)</em>{x}= \sum_{j=0}^{n-1} a_jx^j$</p>
+<p>不难理解，上式可以看成是关于$x$的函数，唯一确定了一个$n-1$次多项式，<br>$$A(x)=a_0+a_1x+a<em>2x^2…a</em>{n-1}x^{n-1}$$</p>
+<p>回忆上一节，当我们知道多项式的$n$对点值$(x_k,y_k)$，可以求得其系数表达向量$(a_0，a_1, …,a_n-1)$。此处,等价的可以唯一确定大整数$A$。</p>
+<p>在系数表达法下，$A$和$B$的乘积类似于竖式计算，时间复杂度为$O(n^2)$。但是，在点值表达法下，$C$的点值对中的$C(x_k)$等于$A$和$B$对应点值对的$A(x_k)$,$B(x_k)$的乘积，即$C$的点值对表示为，<br>$$(x_0,A(x_0)<em>B(x_0)),(x_1,A(x_1)</em>B(x<em>1)),…,(x</em>{n-1},A(x<em>{n-1})*B(x</em>{n-1}))$$<br>时间复杂度为$O(n)$。这么一来，如果要计算大数乘法，使用点值表达法是最好不过了。然而，上一节我们知道从系数表达转换点值表达的时间复杂度一般为$O(n^2)$，总体来说效率不升反降。<br>问题：是否有方法降低转换所需的时间复杂度呢？<br>当然，答案是肯定的。</p>
+<p>接下来，我们就要考虑利用快速傅里叶变换（FFT）和逆变换在系数表达和点值表达间切换。</p>
+<blockquote>
+<p>Written with <a href="https://stackedit.io/" target="_blank" rel="external">StackEdit</a>.</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/17/FFT-2/">show_all >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-FFT-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
