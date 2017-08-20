@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://github.com/2Rings">
-  <title>Hello! | DENHAR</title>
+  <title>FFT(4) | DENHAR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to denhar! This is my very first post. Check documentation for more info. If you also a fan of Harden or are interested in Artificial Intelligence, please keep in touch! My GitHub.">
-<meta name="keywords" content="WelcomePage">
+  <meta name="description" content="快速傅里叶变换解大数乘法（四）  愚公移山 ===================">
+<meta name="keywords" content="Algorithm,FFT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello!">
-<meta property="og:url" content="https://github.com/2Rings/2017/08/15/hello-world/index.html">
+<meta property="og:title" content="FFT(4)">
+<meta property="og:url" content="https://github.com/2Rings/2017/08/20/FFT-4/index.html">
 <meta property="og:site_name" content="DENHAR">
-<meta property="og:description" content="Welcome to denhar! This is my very first post. Check documentation for more info. If you also a fan of Harden or are interested in Artificial Intelligence, please keep in touch! My GitHub.">
-<meta property="og:updated_time" content="2017-08-16T22:06:13.336Z">
+<meta property="og:description" content="快速傅里叶变换解大数乘法（四）  愚公移山 ===================">
+<meta property="og:updated_time" content="2017-08-20T06:39:30.590Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello!">
-<meta name="twitter:description" content="Welcome to denhar! This is my very first post. Check documentation for more info. If you also a fan of Harden or are interested in Artificial Intelligence, please keep in touch! My GitHub.">
+<meta name="twitter:title" content="FFT(4)">
+<meta name="twitter:description" content="快速傅里叶变换解大数乘法（四）  愚公移山 ===================">
   
   
     <link rel="icon" href="/favicon.png">
@@ -148,27 +148,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-FFT-4" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello!
+      FFT(4)
     </h1>
   
 
         
-        <a href="/2017/08/15/hello-world/" class="archive-article-date">
-  	<time datetime="2017-08-15T15:11:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-15</time>
+        <a href="/2017/08/20/FFT-4/" class="archive-article-date">
+  	<time datetime="2017-08-20T06:36:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://2rings.github.io/" target="_blank" rel="external">denhar</a>! This is my very first post. Check <a href="https://2rings.github.io/readme.md/" target="_blank" rel="external">documentation</a> for more info. If you also a fan of Harden or are interested in Artificial Intelligence, please keep in touch! My <a href="https://github.com/2Rings">GitHub</a>.</p>
+        <p><strong>快速傅里叶变换解大数乘法（四）</strong></p>
+<hr>
+<p>愚公移山</p>
+<p><strong>===================</strong><br><a id="more"></a></p>
+<p><strong>快速傅里叶变换FFT</strong></p>
+<p>为了便于理解，接受，在此以后，我们将假设$n$为$2$的整数幂。<br>再强调一下，我们现在已知系数向量$a=(a_0，a_1, …,a_n-1)$，希望求多项式$A(x)$在$w_n^0,w_n^1,…,w_n^{n-1}$处的值。</p>
+<p>FFT运用的是“<a href="https://en.wikipedia.org/wiki/Divide_and_conquer_algorithm" target="_blank" rel="external">分而治之</a>”的策略。直观地，我们想把系数下标为偶数和系数下标为奇数的情况分开运算。于是，我们重新定义两个新的次数界为$n/2$的多项式$A^{[0]}(x)$和$A^{[1]}(x)：$<br>$$A^{[0]}(x)=a_0+a_2x+a<em>4x^2…a</em>{n-2}x^{n/2-1}$$<br>$$A^{[1]}(x)=a_1+a_3x+a<em>5x^2…a</em>{n-1}x^{n/2-1}$$<br>注意到，$A^{[0]}(x)$和$A^{[1]}(x)$分别是下标为偶数系数和下标为奇数系数组成的多项式，和原多项式的关系为<br>$$A(x)=A^{[0]}(x^2)+xA^{[1]}(x^2)$$<br>则原问题分解为两个子问题：<br>1、求次数界为$n/2$的多项式$A^{[0]}(x)$和$A^{[1]}(x)$在点<br>$$(w_n^0)^2,(w_n^1)^2,…,(w_n^{n-1})^2$$<br>的值；<br><strong>注意：</strong>由引理2，我们可以知道上述$n$个点是$n/2$个$n/2$次单位复数根的组成，只是每个根出现了两次。换而言之，我们第一个子问题是：已知系数向量$a=(a_0，a_1, …,a<em>n-1)$，希望求多项式$A^{[0]}(x)$和$A^{[1]}(x)$在$n/2$个$n/2$次单位复数根$w</em>{n/2}^k，k=0,1,…,n/2-1$处的取值。<br>2、将第一个子问题得到的值通过$$A(x)=A^{[0]}(x^2)+xA^{[1]}(x^2)$$加起来。</p>
+<p>由此一来，我们就可以按照类似思路一直二分下去，将问题规模缩小。同时，我们规定了$n$为2的整数幂，所以最后必定通过$log_2n$步将原问题化为最小子问题。</p>
+<p><strong>FFT算法:</strong></p>
+<p>说了那么多理论，我们来捋一捋这个算法。<br>那就先看看直观的递归形式吧。</p>
+<p>上述递归算法的运行时间有以下递归式：<br>$$T(n)=2T(n/2)+\Theta(n)$$<br>严格地，由<a href="https://en.wikipedia.org/wiki/Master_theorem#Case_2_example" target="_blank" rel="external">主定理第二种情况</a>得$T(n)$有渐近界$\Theta(nlgn)$。</p>
+<p><strong>FFT逆运算</strong><br>通过上述算法1，我们得到了懂得了从系数表达转换到点值表达的快速方法。<br>那么，我们在点值表达法下，算出大整数A,B的积C的点值表达，如何又从点值表达转回系数表达呢？<br>答案当然是做个逆运算。</p>
+<p>还记得之前提到的一个很有趣的矩阵吗？范德蒙德矩阵。它以及单位复数根的性质使逆运算同样可以做到时间复杂度为$\Theta(nlgn)$。</p>
+<p>再回忆一下，系数表达转点值表达用的是以下矩阵：<br>$$<br>        \begin{bmatrix}<br>        1 &amp; x_0 &amp; x_0^2 &amp;\cdots&amp;x_0^{n-1} \<br>       1 &amp; x_1 &amp; x_1^2 &amp;\cdots&amp;x<em>1^{n-1} \<br>       \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\<br>        1 &amp; x</em>{n-1} &amp; x<em>{n-1}^2 &amp;\cdots&amp;x</em>{n-1}^{n-1} \<br>        \end{bmatrix}<br>    \begin{bmatrix}<br>        a_0 \<br>       a<em>1 \<br>       \vdots\<br>       a</em>{n-1} \<br>        \end{bmatrix} =<br>    \begin{bmatrix}<br>        y_0 \<br>       y<em>1 \<br>       \vdots\<br>       y</em>{n-1} \<br>        \end{bmatrix}<br>$$</p>
+<p>我们就可以将$y=DFT_n(a)$，写成<br>$$<br>        \begin{bmatrix}<br>        1 &amp; 1 &amp;1 &amp;\cdots    &amp;1\<br>       1 &amp; w_n &amp; w_n^2 &amp;\cdots&amp;w_n^{n-1} \<br>       1 &amp; w_n^2 &amp; w_n^4 &amp;\cdots&amp;w_n^{2(n-1)} \<br>       \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\<br>        1 &amp; w_n^{n-1}&amp; w_n^{2(n-1)} &amp;\cdots&amp;x_n^{(n-1)(n-1)} \<br>        \end{bmatrix}<br>    \begin{bmatrix}<br>        a_0 \<br>       a<em>1 \<br>       \vdots\<br>       a</em>{n-1} \<br>        \end{bmatrix} =<br>    \begin{bmatrix}<br>        y_0 \<br>       y<em>1 \<br>       \vdots\<br>       y</em>{n-1} \<br>        \end{bmatrix}<br>$$<br>简记为$y=V_na$，$V_n$是之前提过的范德蒙德矩阵。显然，$V_n$是一个可逆矩阵。<br>那么，从点值表达转系数表达，就是对上述矩阵方程作逆运算$a=DFT_n^{-1}(y)$<br>$$V_n^{-1}y=V_n^{-1}V_n a=a$$<br><strong>定理2</strong>对$j,k=0,1,…,n-1$,$V_n^{-1}$在$(j,k)$处的元素为$w_n^{-kj}/n$。<br>逆运算$a=DFT_n^{-1}(y)$可以写成，<br>$$<br>        \begin{bmatrix}<br>        1/n &amp; 1/n &amp;1/n &amp;\cdots    &amp;1/n\<br>       1/n &amp; w_n^{-1}/n &amp; w_n^{-2} /n&amp;\cdots&amp;w_n^{-(n-1)}/n \<br>       1/n &amp; w_n^{-2}/n &amp; w_n^{-4}/n &amp;\cdots&amp;w_n^{-2(n-1)} /n\<br>       \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\<br>        1/n &amp; w_n^{-(n-1)}/n&amp; w_n^{-2(n-1)} /n&amp;\cdots&amp;x_n^{-(n-1)(n-1)} /n\<br>        \end{bmatrix}<br>    \begin{bmatrix}<br>        y_0 \<br>       y<em>1 \<br>       \vdots\<br>       y</em>{n-1} \<br>        \end{bmatrix} =<br>    \begin{bmatrix}<br>        a_0 \<br>       a<em>1 \<br>       \vdots\<br>       a</em>{n-1} \<br>        \end{bmatrix}<br>$$<br>$$a<em>k= \frac 1 n \sum</em>{j=0}^{n-1} y_jw_n^{-kj}$$<br>我们用同样的算法也在可以在$\Theta(nlgn)$时间内算出$DFT_n^{-1}(y)$。<br>以上，我们便实现了从点值表达到系数表达，得到大整数$C$的系数$c_k,k=0,1,…,n-1$，对应的多项式为<br>$$C(x)=c_0+c_1x+c<em>2x^2+…+c</em>{n-1}x^{n-1}$$<br>代入$x=10$,即为$C$的十进制表示。<br>OVER</p>
+<p><strong>范德蒙德矩阵</strong></p>
+<p>我们将形为<br>$$\begin{bmatrix}<br>        1 &amp; x_0 &amp; x_0^2 &amp;\cdots&amp;x_0^{n-1} \<br>       1 &amp; x_1 &amp; x_1^2 &amp;\cdots&amp;x<em>1^{n-1} \<br>       \vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots\<br>        1 &amp; x</em>{n-1} &amp; x<em>{n-1}^2 &amp;\cdots&amp;x</em>{n-1}^{n-1} \<br>        \end{bmatrix}<br>$$<br>称为范德蒙德矩阵，记为$V(x_0,x<em>1,..x</em>(n-1))$。</p>
 
       
 
@@ -213,7 +229,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">WelcomePage</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">FFT</a>
         		</li>
       		
 		</ul>
@@ -225,7 +245,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/NewFriends/" class="article-tag-list-link color1">NewFriends</a>
+        			<a href="/categories/CS/" class="article-tag-list-link color3">CS</a>
         		</li>
       		
 		</ul>
@@ -280,7 +300,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/2Rings/2017/08/15/hello-world/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=https://github.com/2Rings/2017/08/20/FFT-4/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -294,15 +314,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/16/Welcome/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Welcome!
-        
-      </div>
-    </a>
   
+    <a href="/2017/08/18/FFT-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">FFT(3)</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 

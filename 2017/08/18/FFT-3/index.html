@@ -9,13 +9,13 @@
   <title>FFT(3) | DENHAR</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="快速傅里叶变换解大数乘法（三）  愚公移山 ===================">
-<meta name="keywords" content="FFT,Algorithm">
+<meta name="keywords" content="Algorithm,FFT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFT(3)">
 <meta property="og:url" content="https://github.com/2Rings/2017/08/18/FFT-3/index.html">
 <meta property="og:site_name" content="DENHAR">
 <meta property="og:description" content="快速傅里叶变换解大数乘法（三）  愚公移山 ===================">
-<meta property="og:updated_time" content="2017-08-18T20:36:59.798Z">
+<meta property="og:updated_time" content="2017-08-20T06:39:26.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFT(3)">
 <meta name="twitter:description" content="快速傅里叶变换解大数乘法（三）  愚公移山 ===================">
@@ -182,7 +182,9 @@
 <p>回顾并结合刚学的单位复数根，如果我们已知$n-1$次多项式<br>$$A(x)=a_0+a_1x+a<em>2x^2…a</em>{n-1}x^{n-1}$$<br>的系数向量$a=(a_0，a_1, …,a_n-1)$，我们希望计算出其在$w_n^0,w_n^1,…,w_n^{n-1}$处的值，记为<br>$$y_k=A(w<em>n^k)=\sum</em>{j=0}^{n-1} a_jw^{kj}$$</p>
 <p>如果你还不了解傅里叶变换可以<a href="https://en.wikipedia.org/wiki/Fourier_transform" target="_blank" rel="external">维基一下</a>。</p>
 <p>直接给出离散傅里叶变换（DFT）的公式<br>$$X[k]=\sum_{n=0}^{N-1} x_ne^{-i{\frac{2\pi kn}N}}$$<br>逆变换公式<br>$$x<em>n=\frac 1N \sum</em>{n=0}^{N-1} X[k]e^{i\frac{2\pi kn}N}$$</p>
-<p>向量$y=(y_0，y_1, …,y_n-1)$就是系数向量$a=(a_0，a_1, …,a_n-1)$的离散傅里叶变换（DFT），记为$y=DFT_n(a)$。</p>
+<p>向量$y=(y_0，y_1, …,y_n-1)$就是系数向量$a=(a_0，a_1, …,a_n-1)$的离散傅里叶变换（DFT），记为$y=DFT_n(a)$。利用DFT从系数表达到点值表达及其逆运算的时间复杂度均为$O(n^2)$。</p>
+<p><strong>定理1：</strong>当输入与输出多项式均采用系数表达时，我们就能在$\Theta(nlogn)$时间复杂度内，计算出两个次数界为$n$的多项式乘积。</p>
+<p>利用单位复数根的性质，我就可以引入快速傅里叶变换（FFT）在$\Theta(nlogn)$时间复杂度内算出$DFT_n(a)$。上述定理就自然而然地证明了。</p>
 
       
 
@@ -227,11 +229,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">FFT</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Algorithm</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">FFT</a>
         		</li>
       		
 		</ul>
@@ -311,6 +313,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2017/08/20/FFT-4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          FFT(4)
+        
+      </div>
+    </a>
   
   
     <a href="/2017/08/17/FFT-2/" id="article-nav-older" class="article-nav-link-wrap">
@@ -440,11 +451,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">WelcomePage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">markdownExample</a>
+                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -452,7 +459,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Algorithm</a>
+                <a href="javascript:void(0)" class="js-tag color2">WelcomePage</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">markdownExample</a>
               </li>
             
             <div class="clearfix"></div>
