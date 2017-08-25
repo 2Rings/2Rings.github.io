@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://github.com/2Rings/2017/08/20/FFT-4/index.html">
 <meta property="og:site_name" content="DENHAR">
 <meta property="og:description" content="快速傅里叶变换解大数乘法（四）  愚公移山 ===================">
-<meta property="og:updated_time" content="2017-08-21T01:42:03.408Z">
+<meta property="og:updated_time" content="2017-08-25T15:45:56.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFT(4)">
 <meta name="twitter:description" content="快速傅里叶变换解大数乘法（四）  愚公移山 ===================">
@@ -171,8 +171,8 @@
         <p><strong>快速傅里叶变换解大数乘法（四）</strong></p>
 <hr>
 <p>愚公移山</p>
-<p><strong>===================</strong><br><a id="more"></a></p>
-<p><strong>快速傅里叶变换FFT</strong></p>
+<p><strong>===================</strong></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p><strong>快速傅里叶变换FFT</strong></p>
 <p>为了便于理解，接受，在此以后，我们将假设$n$为$2$的整数幂。<br>再强调一下，我们现在已知系数向量$a=(a_0，a_1, …,a_n-1)$，希望求多项式$A(x)$在$w_n^0,w_n^1,…,w_n^{n-1}$处的值。</p>
 <p>FFT运用的是“<a href="https://en.wikipedia.org/wiki/Divide_and_conquer_algorithm" target="_blank" rel="external">分而治之</a>”的策略。直观地，我们想把系数下标为偶数和系数下标为奇数的情况分开运算。于是，我们重新定义两个新的次数界为$n/2$的多项式$A^{[0]}(x)$和$A^{[1]}(x)：$<br>$$A^{[0]}(x)=a_0+a_2x+a_4x^2…a_{n-2}x^{n/2-1}$$<br>$$A^{[1]}(x)=a_1+a_3x+a_5x^2…a_{n-1}x^{n/2-1}$$<br>注意到，$A^{[0]}(x)$和$A^{[1]}(x)$分别是下标为偶数系数和下标为奇数系数组成的多项式，和原多项式的关系为<br>$$A(x)=A^{[0]}(x^2)+xA^{[1]}(x^2)$$<br>则原问题分解为两个子问题：<br>1、求次数界为$n/2$的多项式$A^{[0]}(x)$和$A^{[1]}(x)$在点<br>$$(w_n^0)^2,(w_n^1)^2,…,(w_n^{n-1})^2$$<br>的值；<br><strong>注意：</strong>由引理2，我们可以知道上述$n$个点是$n/2$个$n/2$次单位复数根的组成，只是每个根出现了两次。换而言之，我们第一个子问题是：已知系数向量$a=(a_0，a_1, …,a_n-1)$，希望求多项式$A^{[0]}(x)$和$A^{[1]}(x)$在$n/2$个$n/2$次单位复数根$w_{n/2}^k，k=0,1,…,n/2-1$处的取值。<br>2、将第一个子问题得到的值通过$$A(x)=A^{[0]}(x^2)+xA^{[1]}(x^2)$$加起来。</p>
 <p>由此一来，我们就可以按照类似思路一直二分下去，将问题规模缩小。同时，我们规定了$n$为2的整数幂，所以最后必定通过$log_2n$步将原问题化为最小子问题。</p>
@@ -453,10 +453,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">WelcomePage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">markdownExample</a>
               </li>
             
             <div class="clearfix"></div>

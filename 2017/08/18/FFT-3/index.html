@@ -15,7 +15,7 @@
 <meta property="og:url" content="https://github.com/2Rings/2017/08/18/FFT-3/index.html">
 <meta property="og:site_name" content="DENHAR">
 <meta property="og:description" content="快速傅里叶变换解大数乘法（三）  愚公移山 ===================">
-<meta property="og:updated_time" content="2017-08-21T01:41:39.938Z">
+<meta property="og:updated_time" content="2017-08-25T15:46:45.478Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFT(3)">
 <meta name="twitter:description" content="快速傅里叶变换解大数乘法（三）  愚公移山 ===================">
@@ -171,7 +171,8 @@
         <p><strong>快速傅里叶变换解大数乘法（三）</strong></p>
 <hr>
 <p>愚公移山</p>
-<p><strong>===================</strong><br><a id="more"></a><br><strong>单位复数根</strong></p>
+<p><strong>===================</strong></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p><strong>单位复数根</strong></p>
 <p>在正式引入傅里叶变换之前，我们需要了解一下单位复数根。</p>
 <p>将满足$n$次多项式$w^n=1$的$w$称为$n$次单位复数根，而且这样的$n$次单位复数根恰好有$n$个（代数基本定理）。</p>
 <p>很巧，这$n$个$n$次单位复数根有易于理解的形式：$e^{2\pi ik/n}$,其中$k=0,1,…,{n-1}$,记为$w_n^0,w_n^1,…,w_n^{n-1}$。为了理解这个表达式，引入欧拉（幅角）公式：$$e^{i\theta}=cos(\theta)+isin(\theta)$$<br>则，对主$n$次单位根（$k=1$时）有，<br>$$w_n=e^{2\pi i/n }=cos(2\pi /n)+isin(2\pi /n)$$<br>这$n$个$n$次单位复数根均匀地分布在以复平面的原点为圆心的单位半径的圆周上。接下来，我们将引入一些引理，推论辅助我们运用这$n$个复数作为点值对的$x$。别担心，只要你会指数运算都可以理解。</p>
@@ -453,10 +454,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">WelcomePage</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">markdownExample</a>
               </li>
             
             <div class="clearfix"></div>
